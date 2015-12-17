@@ -1,0 +1,108 @@
+
+*** These modified files were found in JOE when it aborted on Thu Dec 17 14:02:52 2015
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+quit
+
+*** File '(Unnamed)'
+/root/docker-monitoring/.git/COMMIT_EDITMSG
+
+*** File '/root/docker-monitoring/.git/COMMIT_EDITMSG'
+initial commit
+
+# Please enter z
+theq
+zzzzzzk
+
+
+
+
+
+
+ commit message forida
+
+
+d
+<
+< your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   .coveragerc
+#	new file:   .gitignore
+#	new file:   .travis.yml
+#	new file:   LICENSE
+#	new file:   README.md
+#	new file:   docker_monitoring/__init__.py
+#	new file:   docker_monitoring/check_docker.py
+#	new file:   requirements.txt
+#	new file:   setup.py
+#	new file:   test/__init__.py
+#	new file:   tox.ini
+#
+
+*** These modified files were found in JOE when it aborted on Thu Dec 17 14:06:42 2015
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+exsave
+
+*** File '* Build Log *'
+/bin/sh: 1: exsave: not found
+
+
+
+
+
+
+
+
+
+
+
+
+
+exit
+
+quit
+
+
+
+
+
+cancel
+killjoe
+
+*** File '/root/docker-monitoring/.git/COMMIT_EDITMSG'
+
+
+qqq!initial:
+ commi
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   .coveragerc
+#	new file:   .gitignore
+#	new file:   .travis.yml
+#	new file:   DEADJOE
+#	new file:   LICENSE
+#	new file:   README.md
+#	new file:   docker_monitoring/__init__.py
+#	new file:   docker_monitoring/check_docker.py
+#	new file:   requirements.txt
+#	new file:   setup.py
+#	new file:   test/__init__.py
+#	new file:   tox.ini
+#
+
+*** File '(Unnamed)'
+/root/docker-monitoring/.git/COMMIT_EDITMSG
+* Build Log *
