@@ -86,7 +86,7 @@ def check_port(port, host='127.0.0.1'):
 
     return True
 
-def do_summary(client, info):
+def do_summary(client, info, warn=None, crit=None):
     name = info['Name']
     version = info['ServerVersion']
     os = info['OperatingSystem']
@@ -97,6 +97,20 @@ def do_summary(client, info):
     num_routines = info['NGoroutines']
     num_fds = info['NFd']
     num_evlist = info['NEventsListener']
+   
+    if crit is not None:
+        if int(num_containers) <= int(crit):
+            print('CRITICAL: Docker %s on %s is running but we could '
+                    'only find %s containers which is below critical '
+                    'threshold of %s' % (version, name, num_containers, crit))
+            sys.exit(STATE_CRITICAL)
+
+    if warn is not None:
+        if int(num_containers) <= int(warn):
+            print('WARNING: Docker %s on %s is running but we could '
+                    'only find %s containers which is below warning '
+                    'threshold of %s' % (version, name, num_containers, warn))
+            sys.exit(STATE_WARNING)
 
     FINAL_STATE = 'OK'
     FINAL_RETURN = 0
@@ -208,4 +222,4 @@ def do_container_check(client, name):
 if args.container != None:
     do_container_check(client, args.container)
 
-do_summary(client, info)
+do_summary(client, info, args.warning, args.critical)
