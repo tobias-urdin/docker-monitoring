@@ -57,6 +57,8 @@ parser.add_argument('--warning', type=str, required=False,
                     help='Warning for containers if running summary')
 parser.add_argument('--critical', type=str, required=False,
                     help='Critical for containers if running summary')
+parser.add_argument('--blacklist', type=str, required=False,
+                    help='Blacklist ports to check', nargs='*')
 
 args = parser.parse_args()
 
@@ -201,6 +203,10 @@ def do_container_check(client, name):
                 port = p['PrivatePort']
             else:
                 continue
+
+            if args.blacklist is not None:
+                if str(port) in args.blacklist:
+                    continue
 
             if proto not in ['tcp']:
                 print 'CRITICAL: Does not support protocol %s' % (proto)
