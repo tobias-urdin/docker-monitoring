@@ -182,37 +182,47 @@ def do_container_check(client, name):
         ok_ports = []
 
         for p in ports:
-            if 'PublicPort' not in p:
+            if 'PublicPort' not in p and 'PrivatePort' not in p:
                 continue
 
-            ip = p['IP']
+            if 'IP' in p:
+                ip = p['IP']
 
-            if ip == '0.0.0.0':
+                if ip == '0.0.0.0':
+                    ip = '127.0.0.1'
+            else:
                 ip = '127.0.0.1'
 
             proto = p['Type']
-            publicport = p['PublicPort']
+
+            if 'PublicPort' in p:
+                port = p['PublicPort']
+            elif 'PrivatePort' in p:
+                port = p['PrivatePort']
+            else:
+                continue
 
             if proto not in ['tcp']:
                 print 'CRITICAL: Does not support protocol %s' % (proto)
                 sys.exit(STATE_CRITICAL)
 
-            if check_port(publicport, ip) == False:
-                print('CRITICAL: Container %s health check on public port '
-                        '%s %s against %s failed' % (name, proto, publicport,
+            if check_port(port, ip) == False:
+                print('CRITICAL: Container %s health check on port '
+                        '%s %s against %s failed' % (name, proto, port,
                             ip))
                 sys.exit(STATE_CRITICAL)
 
-            ok_ports.append(publicport)
+            ok_ports.append(port)
 
         if len(ok_ports) <= 0:
-            print('CRITICAL: Container %s health check passed but no ok ports'
-                    ' was reported' % (name))
+            print('CRITICAL: Container %s health check passed but no OK ports'
+                    ' were reported' % (name))
+            sys.exit(STATE_CRITICAL)
 
         ok_ports_string = str(ok_ports).strip('[]')
 
         print('OK: Container %s passed all health check on '
-                'public ports %s' % (name, ok_ports_string))
+                'ports %s' % (name, ok_ports_string))
         sys.exit(STATE_OK)
     
     print('OK: Container %s is running with image %s and status %s' % (name,
