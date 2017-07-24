@@ -63,7 +63,7 @@ parser.add_argument('--blacklist', type=str, required=False,
 args = parser.parse_args()
 
 try:
-    client = docker.Client(base_url=args.base)
+    client = docker.Client(base_url=args.base, version='1.19')
 except Exception, e:
     print 'CRITICAL: Failed to create docker client: %s' % (e)
     sys.exit(STATE_CRITICAL)
@@ -90,35 +90,27 @@ def check_port(port, host='127.0.0.1'):
 
 def do_summary(client, info, warn=None, crit=None):
     name = info['Name']
-    version = info['ServerVersion']
-    os = info['OperatingSystem']
-    kernversion = info['KernelVersion']
-
     num_containers = info['Containers']
-    num_images = info['Images'],
-    num_routines = info['NGoroutines']
-    num_fds = info['NFd']
-    num_evlist = info['NEventsListener']
-   
+
     if crit is not None:
         if int(num_containers) <= int(crit):
-            print('CRITICAL: Docker %s on %s is running but we could '
+            print('CRITICAL: Docker on %s is running but we could '
                     'only find %s containers which is below critical '
-                    'threshold of %s' % (version, name, num_containers, crit))
+                    'threshold of %s' % (name, num_containers, crit))
             sys.exit(STATE_CRITICAL)
 
     if warn is not None:
         if int(num_containers) <= int(warn):
-            print('WARNING: Docker %s on %s is running but we could '
+            print('WARNING: Docker on %s is running but we could '
                     'only find %s containers which is below warning '
-                    'threshold of %s' % (version, name, num_containers, warn))
+                    'threshold of %s' % (name, num_containers, warn))
             sys.exit(STATE_WARNING)
 
     FINAL_STATE = 'OK'
     FINAL_RETURN = 0
 
-    print('%s: Docker %s on %s is running '
-          '%s containers' % (FINAL_STATE, version, name, num_containers))
+    print('%s: Docker on %s is running '
+          '%s containers' % (FINAL_STATE, name, num_containers))
     sys.exit(FINAL_RETURN)
 
 def get_container_by_name(client, name):
